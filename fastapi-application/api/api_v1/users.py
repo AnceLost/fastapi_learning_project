@@ -16,3 +16,11 @@ async def get_users(
 ):
     users = await get_all_users(session)
     return users
+
+@router.post("/create/", response_model=UserRead)
+async def create_user(
+    user_create: UserCreate,
+    session: AsyncSession = Depends(db_helper.session_getter),
+) -> User:
+    user = await create_1_user(session, user_create)
+    return user
