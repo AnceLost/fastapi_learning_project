@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import ORJSONResponse
 import uvicorn
 
 from api import router as api_router 
@@ -15,7 +16,8 @@ async def lifespan(app: FastAPI):
     db_helper.dispose()
 
 main_app = FastAPI(
-    lifespan=lifespan
+    lifespan=lifespan,
+    default_response_class=ORJSONResponse
 )
 main_app.include_router(api_router)
 
